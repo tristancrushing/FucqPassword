@@ -106,7 +106,7 @@ class FucqPassword {
     private function preparePayload(string $passphrase): array {
         return [
             'prompt' => 'Analyze this passphrase: "' . $passphrase . '" and provide feedback. Mock response for passphrase analysis. Response should be in JSON code block with an analysis object, and passphrases object that has 5 iterations or mockings of the passphrase.',
-            'max_tokens' => 50
+            'max_tokens' => 500
             // Add other necessary parameters for the API request
         ];
     }

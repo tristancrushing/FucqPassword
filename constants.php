@@ -9,7 +9,11 @@
  * Contact: tristan@ipspy.net
  */
 
+require_once 'IpspyProductionApiKeys.php';
+
 // Define the OpenAI API Key
 define('OPENAI_API_KEY', 'your_openai_api_key_here');
+
+define('IPSPY_PRODUCTION_API_KEYS', (new IpspyProductionApiKeys())->getApiKeys());
 
 ?>

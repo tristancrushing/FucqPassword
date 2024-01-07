@@ -175,10 +175,12 @@ class FucqPassword {
             'messages' => [
                 ['role' => "system", 'content' => "Analyze this passphrase: {$passphrase} and provide feedback. Mock response for passphrase analysis. Response should be in JSON code block with an analysis object, and passphrases object that has 5 iterations or mockings of the passphrase. Make sure the return is only json and in a code block, make sure all generated passphrases are gramatically correct for the english language."],
                 ['role' => "system", 'content' => "PASS_PHRASE_TO_MOCK: {$passphrase}"],
-                ['role' => "user", 'content' => 'EXAMPLE_JSON_RETURN_FORMAT = {"analysis":{"genesisPassphrase":"'.$passphrase.'","length":CALCULATED_BY_CHATGPT,"syllables":CALCULATED_BY_CHATGPT,"word_count":CALCULATED_BY_CHATGPT,"readability_score":CALCULATED_BY_CHATGPT,"complexity":CALCULATED_BY_CHATGPT,"repeated_words":CALCULATED_BY_CHATGPT,"characters":{"total":CALCULATED_BY_CHATGPT,"letters":CALCULATED_BY_CHATGPT,"non_letters":CALCULATED_BY_CHATGPT},"sentiment":{"score":CALCULATED_BY_CHATGPT,"type":CALCULATED_BY_CHATGPT},"language":CALCULATED_BY_CHATGPT,"verbs":CALCULATED_BY_CHATGPT,"nouns":CALCULATED_BY_CHATGPT,"adjectives":CALCULATED_BY_CHATGPT,"pattern":CALCULATED_BY_CHATGPT},"passphrases":[GENERATED_BY_CHATGPT,GENERATED_BY_CHATGPT,GENERATED_BY_CHATGPT,GENERATED_BY_CHATGPT,GENERATED_BY_CHATGPT]}']
+                ['role' => "system", 'content' => 'RETURN_MUST_CONTAIN_VALID_JSON_ONLY'],
+                ['role' => "user", 'content' => 'EXAMPLE_JSON_RETURN_FORMAT = {"analysis":{"genesisPassphrase":"'.$passphrase.'","length":CALCULATED_BY_CHATGPT,"syllables":CALCULATED_BY_CHATGPT,"word_count":CALCULATED_BY_CHATGPT,"readability_score":CALCULATED_BY_CHATGPT,"complexity":CALCULATED_BY_CHATGPT,"repeated_words":CALCULATED_BY_CHATGPT,"characters":{"total":CALCULATED_BY_CHATGPT,"letters":CALCULATED_BY_CHATGPT,"non_letters":CALCULATED_BY_CHATGPT},"sentiment":{"score":CALCULATED_BY_CHATGPT,"type":CALCULATED_BY_CHATGPT},"language":CALCULATED_BY_CHATGPT,"verbs":CALCULATED_BY_CHATGPT,"nouns":CALCULATED_BY_CHATGPT,"adjectives":CALCULATED_BY_CHATGPT,"pattern":CALCULATED_BY_CHATGPT},"passphrases":[GENERATED_BY_CHATGPT,GENERATED_BY_CHATGPT,GENERATED_BY_CHATGPT,GENERATED_BY_CHATGPT,GENERATED_BY_CHATGPT]}'],
+                ['role' => "user", 'content' => 'RETURN_MUST_CONTAIN_VALID_JSON_ONLY']
             ],
             'max_tokens' => 750,
-            'model' => 'gpt-4-0613'
+            'model' => 'gpt-4'
             // Add other necessary parameters for the API request
         ];
     }
@@ -216,8 +218,5 @@ class FucqPassword {
     }
 
 }
-
-$generator = new FucqPassword();
-$generator->__run_example_usage();
 
 ?>

@@ -1,8 +1,25 @@
 <?php
-
+/**
+ * FucqLocationsList Class
+ *
+ * Part of the Fucq (Flexible, Unique, Creative, Quick) suite, this class maintains a detailed list 
+ * of locations, encompassing natural landscapes, urban areas, and even fictional or cosmic settings. 
+ * It offers methods for retrieving a random location and adding new locations, enhancing the variety 
+ * and creativity for uses such as storytelling, game development, or passphrase generation.
+ *
+ * Author: Tristan McGowan
+ * Contact: tristan@ipspy.net
+ */
 class FucqLocationsList {
+    /**
+     * @var array $locations An extensive list of varied locations.
+     */
     private $locations;
 
+    /**
+     * Constructor to initialize the locations array.
+     * The array includes a wide array of locations to ensure a rich selection.
+     */
     public function __construct() {
         // Initialize the array with a diverse range of locations
         $this->locations = [
@@ -48,18 +65,35 @@ class FucqLocationsList {
         ];
     }
 
+    /**
+     * Demonstrates the usage of the FucqLocationsList class.
+     * Mainly for testing and educational purposes.
+     */
+    public function __run_example_usage()
+    {
+        // Example usage:
+        $locationsList = new FucqLocationsList();
+        echo $locationsList->getRandomLocation();
+    }
 
+    /**
+     * Fetches a random location from the locations array.
+     *
+     * @return string A randomly selected location from the list.
+     */
     public function getRandomLocation() {
         return $this->locations[array_rand($this->locations)];
     }
 
-    // Optionally, a method to add more locations
+    /**
+     * Adds a new location to the locations array.
+     * Enables dynamic expansion of the location list for customized usage.
+     *
+     * @param string $location The new location to be added.
+     */
     public function addLocation($location) {
         $this->locations[] = $location;
     }
 }
 
-// Example usage:
-$locationsList = new FucqLocationsList();
-echo $locationsList->getRandomLocation();
 ?>

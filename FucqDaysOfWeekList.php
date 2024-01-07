@@ -1,8 +1,25 @@
 <?php
-
+/**
+ * FucqDaysOfWeekList Class
+ *
+ * Part of the Fucq (Flexible, Unique, Creative, Quick) suite, this class manages a diverse list 
+ * of days of the week, including standard days, extended references, and specific occasions. 
+ * It offers methods for retrieving a random day and for expanding the list with additional days. 
+ * The class is designed to provide a versatile tool for generating creative phrases or complex passwords.
+ *
+ * Author: Tristan McGowan
+ * Contact: tristan@ipspy.net
+ */
 class FucqDaysOfWeekList {
+    /**
+     * @var array $daysOfWeek A list of days including standard days and specific occasions.
+     */
     private $daysOfWeek;
 
+    /**
+     * Constructor to initialize the daysOfWeek array.
+     * The array is pre-populated with a wide range of days to ensure variety.
+     */
     public function __construct() {
         // Initialize the array with standard days, extended references, and specific occasions
         $this->daysOfWeek = [
@@ -47,17 +64,35 @@ class FucqDaysOfWeekList {
 
     }
 
+    /**
+     * Example method to demonstrate the usage of the FucqDaysOfWeekList class.
+     * This method is primarily for testing and educational purposes.
+     */
+    public function __run_example_usage()
+    {
+        // Example usage to demonstrate the class functionality
+        $daysOfWeekList = new FucqDaysOfWeekList();
+        echo $daysOfWeekList->getRandomDayOfWeek();
+    }
+
+    /**
+     * Fetches a random day from the daysOfWeek array.
+     *
+     * @return string A randomly selected day from the list.
+     */
     public function getRandomDayOfWeek() {
         return $this->daysOfWeek[array_rand($this->daysOfWeek)];
     }
 
-    // Optionally, a method to add more days
+    /**
+     * Adds a new day to the daysOfWeek array.
+     * This method allows for the dynamic expansion of the day list.
+     *
+     * @param string $day The new day to add to the list.
+     */
     public function addDayOfWeek($day) {
         $this->daysOfWeek[] = $day;
     }
 }
 
-// Example usage:
-$daysOfWeekList = new FucqDaysOfWeekList();
-echo $daysOfWeekList->getRandomDayOfWeek();
 ?>

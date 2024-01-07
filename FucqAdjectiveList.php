@@ -1,8 +1,25 @@
 <?php
-
+/**
+ * FucqAdjectiveList Class
+ *
+ * This class is a part of the Fucq (Flexible, Unique, Creative, Quick) suite of tools.
+ * It is responsible for maintaining a list of adjectives. The class provides methods
+ * for retrieving a random adjective and adding new adjectives to the list.
+ * The primary purpose is to aid in generating creative and varied phrases or passwords.
+ *
+ * Author: Tristan McGowan
+ * Contact: tristan@ipspy.net
+ */
 class FucqAdjectiveList {
+    /**
+     * @var array $adjectives A list of adjectives.
+     */
     private $adjectives;
 
+    /**
+     * Constructor to initialize the adjectives array.
+     * The adjectives array is populated with a diverse set of words to ensure variety.
+     */
     public function __construct() {
         // Initialize the array with a subset of adjectives
         $this->adjectives = [
@@ -41,6 +58,10 @@ class FucqAdjectiveList {
 
     }
 
+    /**
+     * Example method to demonstrate the usage of the FucqAdjectiveList class.
+     * This method is primarily for testing and educational purposes.
+     */
     public function __run_example_usage()
     {
         // Example usage:
@@ -48,11 +69,21 @@ class FucqAdjectiveList {
         echo $FucqAdjectiveList->getRandomAdjective();
     }
 
+    /**
+     * Fetches a random adjective from the adjectives array.
+     *
+     * @return string A randomly selected adjective from the list.
+     */
     public function getRandomAdjective() {
         return $this->adjectives[array_rand($this->adjectives)];
     }
 
-    // Optionally, a method to add more adjectives
+    /**
+     * Adds a new adjective to the adjectives array.
+     * This method allows for the dynamic expansion of the adjective list.
+     *
+     * @param string $adjective The new adjective to add to the list.
+     */
     public function addAdjective($adjective) {
         $this->adjectives[] = $adjective;
     }

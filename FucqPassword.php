@@ -121,7 +121,7 @@ class FucqPassword {
         // URL and headers for the OpenAI API
         $url = 'https://api.openai.com/v1/engines/gpt-4/completions'; // Adjust with the correct API endpoint
         $headers = [
-            'Authorization: Bearer ' . YOUR_API_KEY, // Replace YOUR_API_KEY with the actual key
+            'Authorization: Bearer ' . OPENAI_API_KEY, // Replace YOUR_API_KEY with the actual key
             'Content-Type: application/json'
         ];
 

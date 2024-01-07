@@ -23,6 +23,7 @@ require_once 'FucqLocationsList.php';  // Path to FucqLocationsList class file
 require_once 'FucqPassphraseAnalyzer.php'; // Path to FucqPassphraseAnalyzer class file
 
 class FucqPassword {
+    
     // Declare properties for each category with specific types
     private FucqAdjectiveList $adjectives;
     private FucqAnimalList $animals;
@@ -214,7 +215,9 @@ class FucqPassword {
         return $this->passwordAnalyzer->rankPassphrases($analysis);
     }
 
-    
 }
+
+$generator = new FucqPassword();
+$generator->__run_example_usage();
 
 ?>

@@ -32,6 +32,7 @@ class FucqPassword {
     private FucqDaysOfWeekList $daysOfWeek;
     private FucqTimesOfDayList $timesOfDay;
     private FucqLocationsList $locations;
+    private FucqPassphraseAnalyzer $passwordAnalyzer;
 
     /**
      * Constructor to initialize each category with its respective list class.
@@ -45,6 +46,7 @@ class FucqPassword {
         $this->daysOfWeek = new FucqDaysOfWeekList();
         $this->timesOfDay = new FucqTimesOfDayList();
         $this->locations = new FucqLocationsList();
+        $this->passwordAnalyzer = new FucqPassphraseAnalyzer();
     }
 
     /**
@@ -164,8 +166,9 @@ class FucqPassword {
 $generator = new FucqPassword();
 $passphrase = $generator->generatePassphrase();
 $analysis = $generator->analyzePassphraseWithGPT4($passphrase);
+$rankedPassphrases = $this->passwordAnalyzer->rankPassphrases(json_decode($analysis,true));
 echo "<pre>";
-print_r($analysis);
+print_r($rankedPassphrases);
 echo "</pre>";
 die();
 

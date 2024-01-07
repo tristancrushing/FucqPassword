@@ -64,17 +64,30 @@ class FucqPassword {
      * @return string A passphrase that is a minimum of 128 characters long.
      */
     public function generatePassphrase(): string {
-        $passphrase = "The " . $this->getRandomElement($this->adjectives) . " " . 
-                      $this->getRandomElement($this->animals) . " " . 
-                      $this->getRandomElement($this->actions) . " " . 
-                      $this->getRandomElement($this->directions) . " every " . 
-                      $this->getRandomElement($this->daysOfWeek) . " " . 
-                      $this->getRandomElement($this->timesOfDay) . " to play at the " . 
-                      $this->getRandomElement($this->locations);
+        $passphrase = "The " . $this->adjectives->getRandomAdjective($this->adjectives) . " " . 
+                      $this->animals->getRandomAnimal($this->animals) . " " . 
+                      $this->actions->getRandomAction($this->actions) . " " . 
+                      $this->directions->getRandomDirection($this->directions) . " every " . 
+                      $this->daysOfWeek->getRandomDayOfWeek($this->daysOfWeek) . " " . 
+                      $this->timesOfDay->getRandomTimeOfDay($this->timesOfDay) . " to play at the " . 
+                      $this->locations->getRandomLocation($this->locations);
 
-        // Append spaces to reach a minimum length of 128 characters if necessary
-        if (strlen($passphrase) < 128) {
-            $passphrase .= str_repeat(' ', 128 - strlen($passphrase));
+        // Check the length and append characters if needed
+        $currentLength = strlen($passphrase);
+        if ($currentLength < 80) {
+            // Calculate remaining length
+            $remainingLength = 80 - $currentLength;
+    
+            // Characters to append
+            $specialChars = ['.', '!', '#'];
+    
+            // Create a random string of numbers and special characters
+            for ($i = 0; $i < $remainingLength; $i++) {
+                $passphrase .= $i % 2 == 0 ? $specialChars[array_rand($specialChars)] : rand(0, 9);
+            }
+        }else{
+            $specialChars = ['.', '!', '?'];
+            $passphrase .= $i % 2 == 0 ? $specialChars[array_rand($specialChars)] : $specialChars[array_rand($specialChars)];
         }
 
         return $passphrase;
@@ -88,16 +101,14 @@ class FucqPassword {
      */
     public function analyzePassphraseWithGPT4(string $passphrase): array {
         $responses = [];
-
-        for ($i = 0; $i < 5; $i++) {
-            $payload = $this->preparePayload($passphrase);
-            $response = $this->sendRequestToGPT4($payload);
-            $responses[] = json_decode($response, true);
-        }
+    
+        $payload = $this->preparePayload($passphrase);
+        $response = $this->sendRequestToGPT4($payload);
+        $responses[] = json_decode($response, true);
 
         return $responses;
     }
-
+    
     /**
      * Prepares the payload for the GPT-4 API request.
      *
@@ -106,12 +117,17 @@ class FucqPassword {
      */
     private function preparePayload(string $passphrase): array {
         return [
-            'prompt' => 'Analyze this passphrase: "' . $passphrase . '" and provide feedback. Mock response for passphrase analysis. Response should be in JSON code block with an analysis object, and passphrases object that has 5 iterations or mockings of the passphrase.',
-            'max_tokens' => 500
+            'messages' => [
+                ['role' => "system", 'content' => "Analyze this passphrase: {$passphrase} and provide feedback. Mock response for passphrase analysis. Response should be in JSON code block with an analysis object, and passphrases object that has 5 iterations or mockings of the passphrase. Make sure the return is only json and in a code block, make sure all generated passphrases are gramatically correct for the english language."],
+                ['role' => "system", 'content' => "PASS_PHRASE_TO_MOCK: {$passphrase}"],
+                ['role' => "user", 'content' => 'EXAMPLE_JSON_RETURN_FORMAT = {"analysis":{"genesisPassphrase":"'.$passphrase.'","length":CALCULATED_BY_CHATGPT,"syllables":CALCULATED_BY_CHATGPT,"word_count":CALCULATED_BY_CHATGPT,"readability_score":CALCULATED_BY_CHATGPT,"complexity":CALCULATED_BY_CHATGPT,"repeated_words":CALCULATED_BY_CHATGPT,"characters":{"total":CALCULATED_BY_CHATGPT,"letters":CALCULATED_BY_CHATGPT,"non_letters":CALCULATED_BY_CHATGPT},"sentiment":{"score":CALCULATED_BY_CHATGPT,"type":CALCULATED_BY_CHATGPT},"language":CALCULATED_BY_CHATGPT,"verbs":CALCULATED_BY_CHATGPT,"nouns":CALCULATED_BY_CHATGPT,"adjectives":CALCULATED_BY_CHATGPT,"pattern":CALCULATED_BY_CHATGPT},"passphrases":[GENERATED_BY_CHATGPT,GENERATED_BY_CHATGPT,GENERATED_BY_CHATGPT,GENERATED_BY_CHATGPT,GENERATED_BY_CHATGPT]}']
+            ],
+            'max_tokens' => 750,
+            'model' => 'gpt-4-0613'
             // Add other necessary parameters for the API request
         ];
     }
-
+    
     /**
      * Sends a request to OpenAI's GPT-4 API and returns the response.
      *
@@ -120,25 +136,26 @@ class FucqPassword {
      */
     private function sendRequestToGPT4(array $payload): string {
         // URL and headers for the OpenAI API
-        $url = 'https://api.openai.com/v1/engines/gpt-4/completions'; // Adjust with the correct API endpoint
+        $url = 'https://api.openai.com/v1/chat/completions'; // Adjust with the correct API endpoint
         $headers = [
-            'Authorization: Bearer ' . OPENAI_API_KEY, // Replace YOUR_API_KEY with the actual key
+            'Authorization: Bearer ' . OPENAI_API_KEY, // Replace OPENAI_API_KEY with the actual key
             'Content-Type: application/json'
         ];
-
+    
         // Initialize cURL session
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-
+    
         // Execute the request and capture the response
         $response = curl_exec($ch);
         curl_close($ch);
-
+    
         return $response;
     }
+
     
 }
 
@@ -146,6 +163,9 @@ class FucqPassword {
 $generator = new FucqPassword();
 $passphrase = $generator->generatePassphrase();
 $analysis = $generator->analyzePassphraseWithGPT4($passphrase);
+echo "<pre>";
 print_r($analysis);
+echo "</pre>";
+die();
 
 ?>

@@ -57,6 +57,13 @@ class FucqActionsList {
       ];
 
     }
+    
+    public function __run_example_usage()
+    {
+        // Example usage:
+        $actionList = new FucqActionsList();
+        echo $actionList->getRandomAction();
+    }
 
     public function getRandomAction() {
         return $this->actions[array_rand($this->actions)];
@@ -68,7 +75,4 @@ class FucqActionsList {
     }
 }
 
-// Example usage:
-$actionList = new FucqActionsList();
-echo $actionList->getRandomAction();
 ?>

@@ -41,6 +41,13 @@ class FucqAdjectiveList {
 
     }
 
+    public function __run_example_usage()
+    {
+        // Example usage:
+        $FucqAdjectiveList = new FucqAdjectiveList();
+        echo $FucqAdjectiveList->getRandomAdjective();
+    }
+
     public function getRandomAdjective() {
         return $this->adjectives[array_rand($this->adjectives)];
     }
@@ -49,10 +56,7 @@ class FucqAdjectiveList {
     public function addAdjective($adjective) {
         $this->adjectives[] = $adjective;
     }
+    
 }
-
-// Example usage:
-$FucqAdjectiveList = new FucqAdjectiveList();
-echo $FucqAdjectiveList->getRandomAdjective();
 
 ?>

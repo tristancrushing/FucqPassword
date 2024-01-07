@@ -161,7 +161,20 @@ class FucqPassword {
         $trimmedString = str_replace('```', '', $responses[0]['choices'][0]['message']['content']); // This removes all instances of triple backticks
         $trimmedString = trim($trimmedString); // Trims whitespace from the beginning and end of the string
 
-        return json_decode($trimmedString,true);
+        $return_array = json_decode($trimmedString,true);
+        
+        $fqChatGPT = 1;
+        _fucq_chatGPT:
+            
+        if(empty($return_array))
+        {
+            $usleep = 500 * $fqChatGPT;
+            usleep($usleep);
+            $fqChatGPT++;
+            goto _fucq_chatGPT;
+        }
+        
+        return $return_array;
     }
     
     /**

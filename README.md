@@ -1,5 +1,7 @@
 # FucqPassword Class
 
+ ![FUCQPassword Logo](FucqPassword-logo.png)
+
 ## Introduction
 `FucqPassword`, standing for **Flexible, Unique, Creative, and Quick Password**, is a pioneering PHP class that combines advanced technology and linguistic creativity to generate highly secure, unique, and memorable passphrases. It integrates OpenAI's GPT-4 to analyze and rank these passphrases based on their complexity, readability, entropy, and memorability. This class is a significant stride in enhancing cybersecurity through innovative passphrase generation.
 

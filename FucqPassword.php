@@ -151,6 +151,9 @@ class FucqPassword {
      * @return array An array of responses from the GPT-4 API.
      */
     public function analyzePassphraseWithGPT4(string $passphrase): array {
+        $fqChatGPT = 1;
+        _fucq_chatGPT:
+            
         $responses = [];
     
         $payload = $this->preparePayload($passphrase);
@@ -162,9 +165,6 @@ class FucqPassword {
         $trimmedString = trim($trimmedString); // Trims whitespace from the beginning and end of the string
 
         $return_array = json_decode($trimmedString,true);
-        
-        $fqChatGPT = 1;
-        _fucq_chatGPT:
             
         if(empty($return_array))
         {
@@ -193,7 +193,7 @@ class FucqPassword {
                 ['role' => "user", 'content' => 'RETURN_MUST_CONTAIN_VALID_JSON_ONLY']
             ],
             'max_tokens' => 750,
-            'model' => 'gpt-4'
+            'model' => 'gpt-4-0613'
             // Add other necessary parameters for the API request
         ];
     }

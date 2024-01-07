@@ -1,8 +1,25 @@
 <?php
-
+/**
+ * FucqAnimalList Class
+ *
+ * Part of the Fucq (Flexible, Unique, Creative, Quick) suite, this class manages a list of animals.
+ * It is designed to provide a diverse and extensive selection of animal names for various applications,
+ * such as generating creative phrases or complex passwords. The class includes methods to retrieve
+ * a random animal and to expand the list with additional animals.
+ *
+ * Author: Tristan McGowan
+ * Contact: tristan@ipspy.net
+ */
 class FucqAnimalList {
+    /**
+     * @var array $animals A list of animal names.
+     */
     private $animals;
 
+    /**
+     * Constructor to initialize the animals array.
+     * The array is pre-populated with a wide range of animal names to ensure diversity.
+     */
     public function __construct() {
         // Initialize the array with a more extensive variety of animals
         $this->animals = [
@@ -58,17 +75,37 @@ class FucqAnimalList {
 
     }
 
+    /**
+     * Example method to demonstrate the usage of the FucqAnimalList class.
+     * This method is primarily for testing and educational purposes.
+     */
+    public function __run_example_usage()
+    {
+        // Example usage:
+        $animalList = new FucqAnimalList();
+        echo $animalList->getRandomAnimal();
+    }
+
+    /**
+     * Fetches a random animal name from the animals array.
+     *
+     * @return string A randomly selected animal name from the list.
+     */
     public function getRandomAnimal() {
         return $this->animals[array_rand($this->animals)];
     }
 
-    // Optionally, a method to add more animals
+    /**
+     * Adds a new animal name to the animals array.
+     * This method allows for the dynamic expansion of the animal list.
+     *
+     * @param string $animal The new animal name to add to the list.
+     */
     public function addAnimal($animal) {
         $this->animals[] = $animal;
     }
+    
 }
 
-// Example usage:
-$animalList = new FucqAnimalList();
-echo $animalList->getRandomAnimal();
+
 ?>

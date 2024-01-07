@@ -40,12 +40,14 @@ class FucqPassphraseAnalyzer {
     
         foreach ($passphrases as $passphrase) {
             $entropy = $this->calculateEntropy($passphrase);
+            $logEntropy = $this->calculateLogEntropy($passphrase);
             $memorability = $this->calculateMemorability($passphrase);
             $totalScore = $entropy + $memorability;
     
             $rankedPassphrases[] = [
                 'passphrase' => $passphrase,
                 'entropy_score' => $entropy,
+                'log_entropy' => $logEntropy,
                 'memorability_score' => $memorability,
                 'total_score' => $totalScore
             ];
@@ -94,6 +96,23 @@ class FucqPassphraseAnalyzer {
         $scaledEntropy = $entropy * 10;
     
         return $scaledEntropy;
+    }
+    
+    /**
+     * Calculates bit based entropy of a passphrase.
+     * 
+     * The entropy is calculated based on the number of words in the passphrase
+     * and the size of the word pool from which these words can be chosen.
+     * 
+     * Entropy = Length of passphrase (in words) * log2(Size of word pool)
+     * 
+     * @param string $passphrase The passphrase to analyze.
+     * @param int $wordPoolSize The size of the word pool.
+     * @return float The entropy of the passphrase.
+     */
+    public function calculateLogEntropy(string $passphrase, int $wordPoolSize = 40000): float {
+        $words = str_word_count($passphrase);
+        return $words * log($wordPoolSize, 2);
     }
 
 

@@ -21,6 +21,7 @@ require_once 'FucqDirectionsList.php'; // Path to FucqDirectionsList class file
 require_once 'FucqDaysOfWeekList.php'; // Path to FucqDaysOfWeekList class file
 require_once 'FucqTimesOfDayList.php'; // Path to FucqTimesOfDayList class file
 require_once 'FucqLocationsList.php';  // Path to FucqLocationsList class file
+require_once 'FucqPassphraseAnalyzer.php'; // Path to FucqPassphraseAnalyzer class file
 
 class FucqPassword {
     // Declare properties for each category with specific types

@@ -1,6 +1,6 @@
 <?php
 
-class AdjectiveList {
+class FucqAdjectiveList {
     private $adjectives;
 
     public function __construct() {
@@ -52,7 +52,7 @@ class AdjectiveList {
 }
 
 // Example usage:
-$adjectiveList = new AdjectiveList();
-echo $adjectiveList->getRandomAdjective();
+$FucqAdjectiveList = new FucqAdjectiveList();
+echo $FucqAdjectiveList->getRandomAdjective();
 
 ?>

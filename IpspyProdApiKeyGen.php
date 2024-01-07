@@ -23,5 +23,6 @@ class IpspyProdApiKeyGen {
         $newKey = self::generateApiKey();
         $keysManager = new IpspyProductionApiKeys();
         $keysManager->addApiKey($newKey);
+        return $newKey;
     }
 }

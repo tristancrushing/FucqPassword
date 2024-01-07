@@ -217,6 +217,12 @@ class FucqPassword {
         return $this->passwordAnalyzer->rankPassphrases($analysis);
     }
 
+    public function generateApiKey(): string {
+        require_once 'IpspyProdApiKeyGen.php';
+
+        return IpspyProdApiKeyGen::addNewApiKey();
+    }
+
 }
 
 ?>

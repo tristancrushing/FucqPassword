@@ -1,7 +1,7 @@
 <?php
 class IpspyProductionApiKeys {
     private $apiKeys = [];
-    private $filePath = 'ipspyProdApiKeys.json';
+    private $filePath = '../../ipspyProdApiKeys.json'; // IMPORTANT make sure this file sits outside of the public web directory.
 
     public function __construct() {
         $this->loadApiKeys();

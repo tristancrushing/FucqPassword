@@ -1,5 +1,4 @@
 <?php
-
 /**
  * FucqPassword Class
  * 
@@ -48,6 +47,54 @@ class FucqPassword {
         $this->locations = new FucqLocationsList();
         $this->passwordAnalyzer = new FucqPassphraseAnalyzer();
     }
+    
+    /**
+     * Demonstrates an example usage of the FucqPassword class.
+     * 
+     * This method showcases how to use the FucqPassword class to generate a passphrase,
+     * analyze it using GPT-4, and then rank multiple passphrases based on their calculated
+     * entropy and memorability scores.
+     *
+     * Process Flow:
+     * 1. Generates a passphrase using the `generatePassphrase` method.
+     * 2. Analyzes the generated passphrase with GPT-4 using `analyzePassphraseWithGPT4`.
+     * 3. Ranks the analyzed passphrases based on their entropy and memorability scores
+     *    through `returnRankPassphrases`.
+     * 
+     * Output:
+     * - The method outputs a formatted array containing the seed passphrase, its analysis,
+     *   and the ranked passphrases. This output is displayed in a readable format using
+     *   the `<pre>` tag for better visibility.
+     *
+     * Example Output Structure:
+     * [
+     *   'seedPassphrase' => <string>, // The initially generated passphrase
+     *   'analysis' => <array>,       // Analysis of the passphrase from GPT-4
+     *   'rankedPassphrases' => <array> // Array of passphrases ranked by scores
+     * ]
+     *
+     * Usage:
+     * - This method is useful for testing and demonstration purposes to understand the
+     *   end-to-end functionality of the FucqPassword class.
+     * - It can be invoked to see how the class generates, analyzes, and ranks passphrases.
+     * 
+     * Note:
+     * - This method is intended for example purposes and might need modification
+     *   for production use.
+     */
+    public function __run_example_usage()
+    {
+        // Example usage
+        $generator = new FucqPassword();
+        $passphrase = $generator->generatePassphrase();
+        $analysis = $generator->analyzePassphraseWithGPT4($passphrase);
+        $rankedPassphrases = $generator->returnRankPassphrases($analysis);
+        
+        echo "<pre>";
+        print_r(['seedPassphrase' => $passphrase, 'analysis' => $analysis, 'rankedPassphrases' => $rankedPassphrases]);
+        echo "</pre>";
+    }
+
 
     /**
      * Fetches a random element from a given list.
@@ -108,8 +155,12 @@ class FucqPassword {
         $payload = $this->preparePayload($passphrase);
         $response = $this->sendRequestToGPT4($payload);
         $responses[] = json_decode($response, true);
+        
+        // Remove the triple backticks and any additional string metadata
+        $trimmedString = str_replace('```', '', $responses[0]['choices'][0]['message']['content']); // This removes all instances of triple backticks
+        $trimmedString = trim($trimmedString); // Trims whitespace from the beginning and end of the string
 
-        return $responses;
+        return json_decode($trimmedString,true);
     }
     
     /**
@@ -158,18 +209,12 @@ class FucqPassword {
     
         return $response;
     }
+    
+    public function returnRankPassphrases(array $analysis): array {
+        return $this->passwordAnalyzer->rankPassphrases($analysis);
+    }
 
     
 }
-
-// Example usage
-$generator = new FucqPassword();
-$passphrase = $generator->generatePassphrase();
-$analysis = $generator->analyzePassphraseWithGPT4($passphrase);
-$rankedPassphrases = $this->passwordAnalyzer->rankPassphrases(json_decode($analysis,true));
-echo "<pre>";
-print_r($rankedPassphrases);
-echo "</pre>";
-die();
 
 ?>

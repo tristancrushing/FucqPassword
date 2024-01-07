@@ -1,8 +1,25 @@
 <?php
-
+/**
+ * FucqTimesOfDayList Class
+ *
+ * As a component of the Fucq (Flexible, Unique, Creative, Quick) suite, this class encapsulates
+ * a comprehensive list of times of day. It includes standard times, specific moments, and unique
+ * periods, enhancing applications that require a nuanced representation of time, such as in
+ * storytelling, event planning, or creative passphrase generation.
+ *
+ * Author: Tristan McGowan
+ * Contact: tristan@ipspy.net
+ */
 class FucqTimesOfDayList {
+    /**
+     * @var array $timesOfDay An extensive and varied list of times of day.
+     */
     private $timesOfDay;
 
+    /**
+     * Constructor to initialize the timesOfDay array.
+     * The array is populated with a broad spectrum of times to cater to diverse needs.
+     */
     public function __construct() {
         // Initialize the array with a range of times of day, including more specific times
         $this->timesOfDay = [
@@ -40,18 +57,34 @@ class FucqTimesOfDayList {
 
     }
 
+    /**
+     * Demonstrates the usage of the FucqTimesOfDayList class.
+     * Mainly for testing and educational purposes.
+     */
+    public function __run_example_usage() {
+        // Example usage:
+        $timesOfDayList = new FucqTimesOfDayList();
+        echo $timesOfDayList->getRandomTimeOfDay();
+    }
+
+    /**
+     * Fetches a random time of day from the timesOfDay array.
+     *
+     * @return string A randomly selected time of day from the list.
+     */
     public function getRandomTimeOfDay() {
         return $this->timesOfDay[array_rand($this->timesOfDay)];
     }
 
-    // Optionally, a method to add more times of day
+    /**
+     * Adds a new time of day to the timesOfDay array.
+     * Enables dynamic expansion of the time list for customized and creative uses.
+     *
+     * @param string $time The new time of day to be added.
+     */
     public function addTimeOfDay($time) {
         $this->timesOfDay[] = $time;
     }
 }
-
-// Example usage:
-$timesOfDayList = new FucqTimesOfDayList();
-echo $timesOfDayList->getRandomTimeOfDay();
 
 ?>

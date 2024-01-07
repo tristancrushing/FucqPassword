@@ -66,7 +66,7 @@ class FucqAdjectiveList {
     {
         // Example usage:
         $FucqAdjectiveList = new FucqAdjectiveList();
-        echo $FucqAdjectiveList->getRandomAdjective();
+        return $FucqAdjectiveList->getRandomAdjective();
     }
 
     /**

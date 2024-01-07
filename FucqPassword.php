@@ -13,6 +13,7 @@
  */
 
 // Import the newly created list classes for each category
+require_once 'constants.php';          // Path to constants.php file
 require_once 'FucqAdjectiveList.php';  // Path to FucqAdjectiveList class file
 require_once 'FucqAnimalList.php';     // Path to FucqAnimalList class file
 require_once 'FucqActionsList.php';    // Path to FucqActionsList class file

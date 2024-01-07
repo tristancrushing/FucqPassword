@@ -18,8 +18,9 @@ function isValidApiKey($apiKey) {
  * Main REST interface for generating and analyzing passphrases.
  */
 function main() {
+    // Output the response
+    header('Content-Type: application/json');
     // Get parameters from the URL
-    $iterations = isset($_GET['iterations']) ? (int)$_GET['iterations'] : 1;
     $seedPhrase = isset($_GET['seedPhrase']) ? urldecode($_GET['seedPhrase']) : '';
     $fpApiKey = isset($_GET['fpapikey']) ? $_GET['fpapikey'] : '';
 
@@ -29,26 +30,15 @@ function main() {
         return;
     }
 
-    // Validate iterations and seedPhrase length
-    if ($iterations < 1 || $iterations > 10 || strlen($seedPhrase) > 128) {
-        echo json_encode(['error' => 'Invalid parameters']);
-        return;
-    }
-
     // Initialize FucqPassword class
     $generator = new FucqPassword();
     $responses = [];
 
-    // Generate and analyze passphrases
-    for ($i = 0; $i < $iterations; $i++) {
-        $passphrase = $seedPhrase ?: $generator->generatePassphrase();
-        $analysis = $generator->analyzePassphraseWithGPT4($passphrase);
-        $rankedPassphrases = $generator->returnRankPassphrases($analysis);
-        $responses[] = ['seedPassphrase' => $passphrase, 'analysis' => $analysis, 'rankedPassphrases' => $rankedPassphrases];
-    }
+    $passphrase = $seedPhrase ?: $generator->generatePassphrase();
+    $analysis = $generator->analyzePassphraseWithGPT4($passphrase);
+    $rankedPassphrases = $generator->returnRankPassphrases($analysis);
+    $responses[] = ['seedPassphrase' => $passphrase, 'analysis' => $analysis, 'rankedPassphrases' => $rankedPassphrases];
 
-    // Output the response
-    header('Content-Type: application/json');
     echo json_encode($responses);
 }
 
